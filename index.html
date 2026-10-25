@@ -302,7 +302,7 @@ footer .names{font-size:clamp(2.4rem,11vw,3.4rem);margin:0}
         <label class="f">Предпочтения по алкоголю
           <select id="alc">
             <option>Не пью алкоголь</option><option>Красное вино</option><option>Белое вино</option><option>Шампанское</option>
-            <option>Крепкие напитки</option><option>Пиво</option><option value="own">Свой вариант…</option>
+            <option>Крепкие напитки</option><option value="own">Свой вариант…</option>
           </select>
         </label>
         <label class="f" id="alc-own">Что бы вы хотели<input type="text" id="alcText" placeholder="Например, розовое вино или коньяк"></label>
@@ -331,9 +331,8 @@ var CONFIG={
   // Адрес веб-приложения Google Apps Script (см. инструкцию). Пока пусто — форма работает в тестовом режиме.
   SCRIPT_URL:'https://script.google.com/macros/s/AKfycbwu_so_ecqtXYMOSmi9QO9QO7I-jrzjMORgLfBFZD-NCGyozOjt43M7HyzGT8VVzzK_Yg/exec',
   // Фото места: путь к файлу, например 'photos/shale.jpg'. Пусто — показывается рамка-заглушка.
-  VENUE_PHOTO:'',
-  // 5 фото для истории по порядку, например 'photos/1.jpg'. Пусто — рамка-заглушка.
-  STORY_PHOTOS:['','','','','']
+  VENUE_PHOTO:'shale.jpg',
+  STORY_PHOTOS:['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg'],
 };
 /* ===================== */
 (function(){
