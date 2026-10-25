@@ -136,6 +136,11 @@ h2+.info{margin-top:0;padding-top:0;border:0}
 .info p+p{margin-top:4px}
 #more{display:grid;gap:18px}
 #alc-own{display:none}
+.pc{border:0;padding:0;margin:0;min-width:0;display:grid;gap:18px}
+.pc+.pc{padding-top:26px;border-top:1px solid var(--line)}
+.pn{font-family:var(--serif);font-style:italic;font-size:1.7rem;line-height:1.2;text-align:center}
+.more{display:grid;gap:18px}
+.own{display:none}
 /* rsvp */
 form{display:grid;gap:18px;text-align:left;margin-top:8px}
 label.f{display:grid;gap:6px;font-size:.85rem;color:var(--muted)}
@@ -195,7 +200,7 @@ footer .names{font-size:clamp(2.4rem,11vw,3.4rem);margin:0}
 <section>
   <div class="wrap">
     <div class="rule rv"></div>
-    <h2 class="rv">Дорогие близкие и друзья!</h2>
+    <h2 class="rv" id="hi">Дорогие близкие и друзья!</h2>
     <p class="lead rv">В этот день мы скажем друг другу самые важные слова. Нам очень хочется, чтобы рядом были те, кто нам дорог. Будем счастливы разделить с вами этот день.</p>
   </div>
 </section>
@@ -288,26 +293,9 @@ footer .names{font-size:clamp(2.4rem,11vw,3.4rem);margin:0}
 <section class="alt">
   <div class="wrap">
     <h2 class="rv">Ждём ваш ответ</h2>
-    <p class="muted rv" style="margin-bottom:26px">Пожалуйста, подтвердите присутствие заранее</p>
+    <p class="muted rv" style="margin-bottom:26px">Просим подтвердить присутствие до 1 июня</p>
     <form id="rsvp" class="rv" novalidate>
-      <label class="f">Имя и фамилия<input type="text" id="name" autocomplete="name" placeholder="Например, Ольга Петрова"></label>
-      <div class="choices" role="radiogroup" aria-label="Вы придёте?">
-        <label class="choice"><input type="radio" name="a" value="yes" checked><span>Приду</span></label>
-        <label class="choice"><input type="radio" name="a" value="no"><span>Не смогу</span></label>
-      </div>
-      <div id="more">
-        <label class="f">Сколько гостей с вами
-          <select id="g"><option>Только я</option><option>Я + 1</option><option>Я + 2</option></select>
-        </label>
-        <label class="f">Предпочтения по алкоголю
-          <select id="alc">
-            <option>Не пью алкоголь</option><option>Красное вино</option><option>Белое вино</option><option>Шампанское</option>
-            <option>Крепкие напитки</option><option value="own">Свой вариант…</option>
-          </select>
-        </label>
-        <label class="f" id="alc-own">Что бы вы хотели<input type="text" id="alcText" placeholder="Например, розовое вино или коньяк"></label>
-        <label class="f">Пожелания к меню<input type="text" id="menu" placeholder="Аллергии, вегетарианское"></label>
-      </div>
+      <div id="people" style="display:grid;gap:26px"></div>
       <p class="err" id="err" role="alert"></p>
       <button class="btn" id="send" type="submit">Отправить ответ</button>
     </form>
@@ -333,6 +321,52 @@ var CONFIG={
   // Фото места: путь к файлу, например 'photos/shale.jpg'. Пусто — показывается рамка-заглушка.
   VENUE_PHOTO:'shale.jpg',
   STORY_PHOTOS:['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg'],
+  // Персональные приглашения. Ссылка для гостя: адрес-сайта/?g=КОД
+  // hi — приветствие; people — кто приглашён. Лишних людей гость добавить не сможет.
+  //   {n:'Имя Фамилия'}            — приглашённый человек
+  //   {n:'Анна', kid:true}         — ребёнок (без вопроса про алкоголь)
+  //   {plus:true}                  — «+1»: гость сам впишет имя спутника(цы)
+  //   {plus:true,label:'Член семьи'} — свободное место (если число гостей неизвестно)
+  // g — подпись приглашения для таблицы
+  // Коды лучше делать случайными, а не по именам.
+  GUESTS:{
+    'xbcvz':{g:'1. Мама Оксана и Папа Александр',hi:'Дорогие мама и папа!',people:[{n:'Оксана'},{n:'Александр'}]},
+    'myd4g':{g:'2. Мама Светлана и Папа Анатолий',hi:'Дорогие мама и папа!',people:[{n:'Светлана'},{n:'Анатолий'}]},
+    'q8myc':{g:'3. Тимофей (ребёнок)',hi:'Дорогой Тимофей!',people:[{n:'Тимофей',kid:true}]},
+    'jnbqe':{g:'4. Максим и Катя',hi:'Дорогие Максим и Катя!',people:[{n:'Максим'},{n:'Катя'}]},
+    'a9qpz':{g:'5. Сережа, Алена и Дашенька',hi:'Дорогие Сергей, Алёна и Дашенька!',people:[{n:'Сергей'},{n:'Алёна'},{n:'Дашенька',kid:true}]},
+    'b8v78':{g:'6. Дедушка Лёша и Елена',hi:'Дорогие дедушка Лёша и Елена!',people:[{n:'Лёша'},{n:'Елена'}]},
+    '8ca4y':{g:'7. Лиза и Гоша',hi:'Дорогие Лиза и Гоша!',people:[{n:'Лиза'},{n:'Гоша'}]},
+    'rmwyv':{g:'8. Злата и Сергей',hi:'Дорогие Злата и Сергей!',people:[{n:'Злата'},{n:'Сергей'}]},
+    '9q8a8':{g:'9. Диана и Павел',hi:'Дорогие Диана и Павел!',people:[{n:'Диана'},{n:'Павел'}]},
+    '8k8x2':{g:'10. Бабушка Зоя',hi:'Дорогая бабушка Зоя!',people:[{n:'Зоя'}]},
+    'he7ze':{g:'11. Дядя Вова',hi:'Дорогой дядя Вова!',people:[{n:'Вова'}]},
+    't7nrn':{g:'12. Семья Дьяконовых (Антон, Анна, Матильда, Настя, Женя)',hi:'Дорогая семья Дьяконовых!',people:[{n:'Антон'},{n:'Анна'},{n:'Матильда'},{n:'Настя'},{n:'Женя'}]},
+    '87hqr':{g:'13. Аня и Сергей',hi:'Дорогие Аня и Сергей!',people:[{n:'Аня'},{n:'Сергей'}]},
+    'hu7j7':{g:'14. Данил и Наташа (дети)',hi:'Дорогие Данил и Наташа!',people:[{n:'Данил',kid:true},{n:'Наташа',kid:true}]},
+    'tf2y5':{g:'15. Семья Тарасовых (Тамара, Владимир, Миша, Лиза, Тася)',hi:'Дорогая семья Тарасовых!',people:[{n:'Тамара'},{n:'Владимир'},{n:'Миша'},{n:'Лиза'},{n:'Тася'}]},
+    'yc2x4':{g:'16. Семья Хопрячковых (Лена, Виталий, Алина, Эвилина)',hi:'Дорогая семья Хопрячковых!',people:[{n:'Лена'},{n:'Виталий'},{n:'Алина'},{n:'Эвилина'}]},
+    '3faxr':{g:'17. Валентина и Дмитрий',hi:'Дорогие Валентина и Дмитрий!',people:[{n:'Валентина'},{n:'Дмитрий'}]},
+    'krhfq':{g:'18. Семья Егоровых (количество уточняется)',hi:'Дорогая семья Егоровых!',people:[{plus:true,label:'Член семьи'},{plus:true,label:'Член семьи'},{plus:true,label:'Член семьи'},{plus:true,label:'Член семьи'}]},
+    'a89uy':{g:'19. Сергей (крёстный Карины)',hi:'Дорогой Сергей!',people:[{n:'Сергей'}]},
+    'e2mm7':{g:'20. Данил Сухомясов',hi:'Дорогой Данил!',people:[{n:'Данил Сухомясов'}]},
+    '94rym':{g:'21. Артур Егоров',hi:'Дорогой Артур!',people:[{n:'Артур Егоров'}]},
+    'hppar':{g:'22. Сергей Калачев',hi:'Дорогой Сергей!',people:[{n:'Сергей Калачев'}]},
+    '65j2k':{g:'23. Николай Сивцев',hi:'Дорогой Николай!',people:[{n:'Николай Сивцев'}]},
+    'w84ju':{g:'24. Егор Никифоров',hi:'Дорогой Егор!',people:[{n:'Егор Никифоров'}]},
+    '5p3rf':{g:'25. Арина Ылахова',hi:'Дорогая Арина!',people:[{n:'Арина Ылахова'}]},
+    'jnbq3':{g:'26. Леонид и Настя',hi:'Дорогие Леонид и Настя!',people:[{n:'Леонид'},{n:'Настя'}]},
+    'zxhcn':{g:'27. Аббас',hi:'Дорогой Аббас!',people:[{n:'Аббас'}]},
+    'e9r9m':{g:'28. Андрей Холмогоров',hi:'Дорогой Андрей!',people:[{n:'Андрей Холмогоров'}]},
+    'knvwv':{g:'29. Глеб',hi:'Дорогой Глеб!',people:[{n:'Глеб'}]},
+    '4kvh3':{g:'30. Дмитрий Андросов',hi:'Дорогой Дмитрий!',people:[{n:'Дмитрий Андросов'}]},
+    's57xe':{g:'31. Максим Пушин',hi:'Дорогой Максим!',people:[{n:'Максим Пушин'}]},
+    'w36ef':{g:'32. Сергей Филатов + 1',hi:'Дорогой Сергей!',people:[{n:'Сергей Филатов'},{plus:true}]},
+    'gpyap':{g:'33. Руслан и Настя Батыровы',hi:'Дорогие Руслан и Настя!',people:[{n:'Руслан Батыров'},{n:'Настя Батырова'}]},
+    'j6qq9':{g:'34. Антон и Настя Поймановы',hi:'Дорогие Антон и Настя!',people:[{n:'Антон Пойманов'},{n:'Настя Пойманова'}]},
+    'ke8e8':{g:'35. Денис и Виктория',hi:'Дорогие Денис и Виктория!',people:[{n:'Денис'},{n:'Виктория'}]},
+    'uya7s':{g:'36. Семья Дьяконовых (Алёна, Олег, тётя Тамара, Тимур)',hi:'Дорогая семья Дьяконовых!',people:[{n:'Алёна'},{n:'Олег'},{n:'Тамара (тётя)'},{n:'Тимур'}]}
+  }
 };
 /* ===================== */
 (function(){
@@ -380,27 +414,64 @@ var CONFIG={
   }
   tick(); setInterval(tick,1000);
 
-  var form=document.getElementById('rsvp'), btn=document.getElementById('send'), err=document.getElementById('err');
-  form.addEventListener('change',function(){
-    document.getElementById('more').style.display=form.a.value==='no'?'none':'grid';
-    document.getElementById('alc-own').style.display=document.getElementById('alc').value==='own'?'grid':'none';
+  var params=new URLSearchParams(location.search), code=params.get('g')||'';
+  var guest=(CONFIG.GUESTS&&CONFIG.GUESTS[code])||null;
+  if(guest&&guest.hi)document.getElementById('hi').textContent=guest.hi;
+  var people=guest?guest.people:[{free:true}];
+  var ALC=['Не пью алкоголь','Красное вино','Белое вино','Шампанское','Крепкие напитки','Пиво'];
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  var ph='';
+  people.forEach(function(p,i){
+    var single=people.length===1, yesL=p.plus?(p.label?'Придёт':'Будет со мной'):(single?'Приду':'Придёт'), noL=p.plus?(p.label?'Не придёт':'Без пары'):(single?'Не смогу':'Не сможет');
+    var nameInput='<label class="f">'+(p.plus?(p.label?esc(p.label)+': имя и фамилия':'Имя и фамилия спутника или спутницы'):'Имя и фамилия')+'<input type="text" class="nm" autocomplete="off" placeholder="Например, Ольга Петрова"></label>';
+    var more='<div class="more">'+(p.plus?nameInput:'');
+    if(!p.kid){
+      more+='<label class="f">Предпочтения по алкоголю<select class="alc">'+ALC.map(function(a){return '<option>'+a+'</option>'}).join('')+'<option value="own">Свой вариант…</option></select></label>'+
+            '<label class="f own">Что бы вы хотели<input type="text" placeholder="Например, розовое вино или коньяк"></label>';
+    }
+    more+='<label class="f">Пожелания к меню<input type="text" class="menu" placeholder="Аллергии, вегетарианское"></label></div>';
+    ph+='<fieldset class="pc" data-i="'+i+'">'+
+      (p.free?nameInput:(p.plus?'':'<p class="pn">'+esc(p.n)+'</p>'))+
+      '<div class="choices" role="radiogroup"><label class="choice"><input type="radio" name="a'+i+'" value="yes"'+(p.plus?'':' checked')+'><span>'+yesL+'</span></label>'+
+      '<label class="choice"><input type="radio" name="a'+i+'" value="no"'+(p.plus?' checked':'')+'><span>'+noL+'</span></label></div>'+more+'</fieldset>';
   });
+  document.getElementById('people').innerHTML=ph;
+
+  var form=document.getElementById('rsvp'), btn=document.getElementById('send'), err=document.getElementById('err');
+  function sync(){
+    form.querySelectorAll('.pc').forEach(function(fs){
+      var yes=fs.querySelector('input[type=radio]:checked').value==='yes';
+      fs.querySelector('.more').style.display=yes?'grid':'none';
+      var a=fs.querySelector('.alc'), o=fs.querySelector('.own');
+      if(a&&o)o.style.display=(yes&&a.value==='own')?'grid':'none';
+    });
+  }
+  form.addEventListener('change',sync); sync();
+
   form.addEventListener('submit',function(ev){
     ev.preventDefault(); err.textContent='';
-    var n=document.getElementById('name').value.trim();
-    if(!n){err.textContent='Введите имя, чтобы мы знали, кто ответил';return}
-    var yes=form.a.value==='yes';
-    function alcVal(){var v=document.getElementById('alc').value;return v==='own'?('Свой вариант: '+(document.getElementById('alcText').value.trim()||'не указан')):v}
+    var rows=[], bad=false, anyYes=false;
+    form.querySelectorAll('.pc').forEach(function(fs){
+      var p=people[+fs.dataset.i], yes=fs.querySelector('input[type=radio]:checked').value==='yes';
+      if(p.plus&&!yes)return;
+      var nm=fs.querySelector('.nm'), name=nm?nm.value.trim():p.n;
+      if(!name){bad=true;return}
+      var a=fs.querySelector('.alc'), al='—';
+      if(yes&&a){al=a.value==='own'?'Свой вариант: '+(fs.querySelector('.own input').value.trim()||'не указан'):a.value}
+      var m=fs.querySelector('.menu');
+      rows.push({code:code,group:(guest&&guest.g)||'',name:name,attend:yes?'Придёт':'Не сможет',alcohol:al,menu:(yes&&m)?m.value.trim():''});
+      if(yes)anyYes=true;
+    });
+    if(bad){err.textContent='Укажите имя, чтобы мы знали, кто ответил';return}
     function done(){
-      document.getElementById('tt').textContent=yes?'Спасибо, '+n.split(' ')[0]+'!':'Нам будет вас не хватать';
-      document.getElementById('tm').textContent=yes?'Мы очень рады, что вы будете с нами 21 июля.':'Спасибо, что сообщили. Мы обязательно отметим вместе в другой раз.';
+      document.getElementById('tt').textContent=anyYes?(rows.length===1?'Спасибо, '+rows[0].name.split(' ')[0]+'!':'Спасибо!'):'Нам будет вас не хватать';
+      document.getElementById('tm').textContent=anyYes?'Мы очень рады, что вы будете с нами 21 июля.':'Спасибо, что сообщили. Мы обязательно отметим вместе в другой раз.';
       if(!CONFIG.SCRIPT_URL)document.getElementById('demo').style.display='block';
       form.style.display='none'; document.getElementById('thanks').classList.add('show');
     }
     if(!CONFIG.SCRIPT_URL){done();return}
-    var p=new URLSearchParams({name:n,attend:yes?'Придёт':'Не сможет',guests:yes?document.getElementById('g').value:'—',alcohol:yes?alcVal():'—',menu:document.getElementById('menu').value.trim()});
     btn.disabled=true; btn.textContent='Отправляем…';
-    fetch(CONFIG.SCRIPT_URL,{method:'POST',mode:'no-cors',body:p}).then(done).catch(function(){
+    Promise.all(rows.map(function(r){return fetch(CONFIG.SCRIPT_URL,{method:'POST',mode:'no-cors',body:new URLSearchParams(r)})})).then(done).catch(function(){
       btn.disabled=false; btn.textContent='Отправить ответ';
       err.textContent='Не получилось отправить. Проверьте интернет и попробуйте ещё раз';
     });
