@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Анна и Михаил — свадебное приглашение</title>
+<title>Олег и Карина — свадебное приглашение</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
@@ -11,6 +11,7 @@
 :root{
   --ivory:#F6F1E4; --paper:#FBF8EF; --ink:#3B3A33; --muted:#7A766A; --gold:#A8905E; --sage:#8C9279; --line:#DDD3BD;
   --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif; --sans:"Jost","Helvetica Neue",Arial,sans-serif;
+  --noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .3 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
   color-scheme:light;
 }
@@ -28,21 +29,18 @@ section{padding:clamp(72px,14vw,120px) 24px;text-align:center;position:relative}
 h2{font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(2.2rem,9vw,3.2rem);line-height:1.1;margin-bottom:28px}
 .lead{font-family:var(--serif);font-size:clamp(1.25rem,4.6vw,1.5rem);line-height:1.6}
 .muted{color:var(--muted)}
+.alt{background:var(--paper);border-block:1px solid var(--line)}
 .rule{width:1px;height:56px;background:var(--gold);margin:0 auto 28px;transform-origin:top;transform:scaleY(0);transition:transform 1.2s ease}
-.in .rule,.rule.in{transform:scaleY(1)}
-
-/* reveal */
+.rule.in{transform:scaleY(1)}
 .rv{opacity:0;transform:translateY(18px);transition:opacity 1s ease,transform 1s ease}
 .rv.in{opacity:1;transform:none}
 
 /* curtain */
 .curtain{position:fixed;inset:0;z-index:50;display:grid;grid-template-columns:1fr 1fr;pointer-events:none}
 .curtain.alive{pointer-events:auto}
-.pan{background:var(--paper);transition:transform 1.8s cubic-bezier(.77,0,.18,1);position:relative}
-.pl{border-right:1px solid var(--gold)}
-.pr{border-left:1px solid var(--gold)}
-.opened .pl{transform:translateX(-101%)}
-.opened .pr{transform:translateX(101%)}
+.pan{background:var(--paper);transition:transform 1.8s cubic-bezier(.77,0,.18,1)}
+.pl{border-right:1px solid var(--gold)}.pr{border-left:1px solid var(--gold)}
+.opened .pl{transform:translateX(-101%)}.opened .pr{transform:translateX(101%)}
 .seal-box{position:fixed;inset:0;z-index:51;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:24px;text-align:center;transition:opacity .6s ease,transform .8s ease}
 .opened .seal-box{opacity:0;transform:scale(1.15);pointer-events:none}
 .seal-box .pre{font-family:var(--serif);font-style:italic;font-size:1.35rem;color:var(--muted)}
@@ -71,31 +69,59 @@ h2{font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(2.
 .scroll{position:absolute;bottom:calc(24px + env(safe-area-inset-bottom,0px));left:50%;width:1px;height:44px;background:linear-gradient(var(--gold),transparent);transform-origin:top;animation:drop 2.4s ease-in-out infinite}
 @keyframes drop{0%{transform:scaleY(0)}60%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
 
+/* story roadmap */
+.road{margin-top:8px}
+.stp{width:68%}
+.stp.l{margin-right:auto}.stp.r{margin-left:auto}
+.ph{width:100%;aspect-ratio:4/5;border-radius:999px 999px 10px 10px;border:1px solid var(--gold);background:var(--ivory);overflow:hidden;display:grid;place-items:center;color:var(--gold);position:relative;box-shadow:0 10px 24px rgba(60,50,30,.10)}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph svg{width:34px;height:34px;opacity:.7}
+.ph small{position:absolute;bottom:18%;font-size:.7rem;letter-spacing:.14em;color:var(--muted)}
+.stp .k{display:block;margin-top:16px;font-size:.78rem;letter-spacing:.16em;color:var(--gold);text-transform:uppercase}
+.stp h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.7rem;line-height:1.2;margin:2px 0 4px}
+.stp p{font-size:.9rem;color:var(--muted);line-height:1.5}
+.conn{display:block;width:100%;height:auto;margin:6px 0}
+.conn .dash{fill:none;stroke:var(--gold);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 7}
+.conn .mk{fill:none;stroke:#fff;stroke-width:10;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.8s ease}
+.conn.in .mk{stroke-dashoffset:0}
+
 /* countdown */
 .count{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:420px;margin:0 auto}
 .count b{display:block;font-family:var(--serif);font-weight:300;font-size:clamp(2.4rem,11vw,3.4rem);line-height:1;font-variant-numeric:tabular-nums}
 .count span{font-size:.8rem;color:var(--muted);letter-spacing:.08em}
 
 /* timeline */
-.alt{background:var(--paper);border-block:1px solid var(--line)}
 .tl{list-style:none;margin:0;padding:0;position:relative;text-align:left}
 .tl::before{content:"";position:absolute;left:78px;top:6px;bottom:6px;width:1px;background:var(--gold);transform-origin:top;transform:scaleY(0);transition:transform 2s ease .2s}
 .tl.in::before{transform:scaleY(1)}
 .tl li{display:grid;grid-template-columns:62px 1fr;gap:0 32px;padding:14px 0;position:relative}
-.tl li::after{content:"";position:absolute;left:74px;top:27px;width:9px;height:9px;border-radius:50%;background:var(--paper);border:1px solid var(--gold)}
+.tl li::after{content:"";position:absolute;left:74px;top:27px;width:9px;height:9px;border-radius:50%;background:var(--ivory);border:1px solid var(--gold)}
 .tl time{font-family:var(--serif);font-size:1.5rem;text-align:right;line-height:1.3}
 .tl h3{font-family:var(--serif);font-weight:400;font-size:1.35rem;line-height:1.3}
 .tl p{font-size:.92rem;color:var(--muted)}
 
-/* place + dress */
+/* place */
 address{font-style:normal}
 .place-name{font-family:var(--serif);font-size:clamp(1.8rem,7vw,2.3rem);font-style:italic;margin-bottom:6px}
-.btn{display:inline-block;margin-top:28px;padding:14px 34px;border:1px solid var(--gold);background:transparent;color:var(--ink);font:400 .9rem var(--sans);letter-spacing:.1em;text-decoration:none;cursor:pointer;transition:background .4s ease,color .4s ease}
+.venue{aspect-ratio:16/10;border-radius:10px;margin:0 0 28px;border:1px solid var(--line)}
+.venue.ph{border-radius:10px}
+.transfer{margin-top:34px;padding-top:28px;border-top:1px solid var(--line)}
+.transfer h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.7rem;margin-bottom:6px}
+.btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px}
+.btn{display:inline-block;padding:13px 28px;border:1px solid var(--gold);background:transparent;color:var(--ink);font:400 .88rem var(--sans);letter-spacing:.1em;text-decoration:none;cursor:pointer;transition:background .4s ease,color .4s ease}
 .btn:hover{background:var(--gold);color:var(--paper)}
-.swatches{display:flex;justify-content:center;gap:14px;margin:30px 0 8px}
-.sw{width:54px;height:54px;border-radius:50%;border:1px solid var(--line);transform:scale(.4);opacity:0;transition:transform .8s cubic-bezier(.34,1.56,.64,1),opacity .6s ease}
+.btn[disabled]{opacity:.6;cursor:wait}
+
+/* dress code */
+.pal{display:grid;grid-template-columns:repeat(3,1fr);gap:26px 10px;margin:34px auto 6px;max-width:400px}
+.pal figure{margin:0}
+.sw{width:68px;height:68px;border-radius:50%;margin:0 auto 10px;background-color:var(--c);
+  background-image:var(--noise),repeating-linear-gradient(0deg,rgba(255,255,255,.16) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgba(0,0,0,.12) 0 1px,transparent 1px 3px),radial-gradient(circle at 32% 28%,rgba(255,255,255,.28),transparent 60%);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.06),inset -5px -7px 12px rgba(0,0,0,.18),0 8px 16px rgba(0,0,0,.14);
+  transform:scale(.4);opacity:0;transition:transform .9s cubic-bezier(.34,1.56,.64,1) var(--d,0s),opacity .6s ease var(--d,0s)}
 .in .sw{transform:none;opacity:1}
-.in .sw:nth-child(2){transition-delay:.15s}.in .sw:nth-child(3){transition-delay:.3s}.in .sw:nth-child(4){transition-delay:.45s}
+.pal figcaption{font-size:.8rem;color:var(--muted);line-height:1.3}
+.note{max-width:420px;margin:30px auto 0;padding-top:22px;border-top:1px solid var(--line);font-size:.92rem;color:var(--muted)}
 
 /* rsvp */
 form{display:grid;gap:18px;text-align:left;margin-top:8px}
@@ -119,7 +145,7 @@ footer .names{font-size:clamp(2.4rem,11vw,3.4rem);margin:0}
   *,*::before,*::after{animation:none!important;transition-duration:.01s!important;transition-delay:0s!important}
   html{scroll-behavior:auto}
   .rv,.hero .a,.branch .lf,.sw{opacity:1;transform:none}
-  .branch .st{stroke-dashoffset:0}.rule,.tl::before{transform:none}
+  .branch .st,.conn .mk{stroke-dashoffset:0}.rule,.tl::before{transform:none}
 }
 </style>
 </head>
@@ -127,8 +153,8 @@ footer .names{font-size:clamp(2.4rem,11vw,3.4rem);margin:0}
 
 <div class="curtain alive" id="curtain" aria-hidden="true"><div class="pan pl"></div><div class="pan pr"></div></div>
 <div class="seal-box" id="sealbox">
-  <p class="pre">Анна и Михаил приглашают вас</p>
-  <button class="seal" id="open" aria-label="Открыть приглашение">А&amp;М</button>
+  <p class="pre">Олег и Карина приглашают вас</p>
+  <button class="seal" id="open" aria-label="Открыть приглашение">О&amp;К</button>
   <p class="hint">НАЖМИТЕ, ЧТОБЫ ОТКРЫТЬ</p>
 </div>
 
@@ -146,9 +172,9 @@ footer .names{font-size:clamp(2.4rem,11vw,3.4rem);margin:0}
       <path class="lf" style="--n:3" d="M118 18 q2 14 -12 18 q-4 -12 12 -18z"/>
     </svg>
     <p class="kicker a" style="--i:1">Мы женимся</p>
-    <h1 class="names a" style="--i:2">Анна<span class="amp">&amp;</span>Михаил</h1>
-    <p class="date a" style="--i:3">19 июня 2027</p>
-    <p class="kicker a" style="--i:4">суббота, 14:00</p>
+    <h1 class="names a" style="--i:2">Олег<span class="amp">&amp;</span>Карина</h1>
+    <p class="date a" style="--i:3">21 июля 2027</p>
+    <p class="kicker a" style="--i:4">Санкт-Петербург</p>
   </div>
   <span class="scroll" aria-hidden="true"></span>
 </section>
@@ -156,15 +182,23 @@ footer .names{font-size:clamp(2.4rem,11vw,3.4rem);margin:0}
 <section>
   <div class="wrap">
     <div class="rule rv"></div>
-    <h2 class="rv">Дорогие друзья и близкие!</h2>
+    <h2 class="rv">Дорогие близкие и друзья!</h2>
     <p class="lead rv">В этот день мы скажем друг другу самые важные слова. Нам очень хочется, чтобы рядом были те, кто нам дорог. Будем счастливы разделить с вами этот день.</p>
   </div>
 </section>
 
 <section class="alt">
   <div class="wrap">
+    <h2 class="rv">Наша история</h2>
+    <p class="muted rv" style="margin-bottom:34px">Два пути, которые привели в один город</p>
+    <div class="road" id="road"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
     <h2 class="rv">До праздника осталось</h2>
-    <div class="count rv" id="count" aria-live="off">
+    <div class="count rv" id="count">
       <div><b id="d">0</b><span>дней</span></div>
       <div><b id="h">0</b><span>часов</span></div>
       <div><b id="m">0</b><span>минут</span></div>
@@ -173,45 +207,59 @@ footer .names{font-size:clamp(2.4rem,11vw,3.4rem);margin:0}
   </div>
 </section>
 
-<section>
+<section class="alt">
   <div class="wrap">
     <h2 class="rv">Программа дня</h2>
-    <ol class="tl rv" id="tl">
-      <li><time>14:00</time><div><h3>Сбор гостей</h3><p>Welcome-кофе и лёгкие закуски в саду</p></div></li>
-      <li><time>15:00</time><div><h3>Церемония</h3><p>Клятвы под открытым небом</p></div></li>
-      <li><time>16:00</time><div><h3>Фуршет и фотосессия</h3><p>Время для объятий и общих кадров</p></div></li>
-      <li><time>18:00</time><div><h3>Праздничный ужин</h3><p>Тосты, музыка и первый танец</p></div></li>
-      <li><time>22:00</time><div><h3>Торт и финал</h3><p>Сладкий стол и прощальный вальс</p></div></li>
+    <ol class="tl rv">
+      <li><time>14:40</time><div><h3>Регистрация в ЗАГСе</h3><p>Суворовский проспект, 41</p></div></li>
+      <li><time>15:10</time><div><h3>Трансфер от ЗАГСа</h3><p>Отправляемся к месту праздника вместе</p></div></li>
+      <li><time>16:30</time><div><h3>Фуршет</h3><p>Встреча гостей и первые тосты</p></div></li>
+      <li><time>17:20</time><div><h3>Церемония</h3><p>Клятвы на открытом воздухе</p></div></li>
+      <li><time>18:00</time><div><h3>Банкет</h3><p>Ужин, музыка и танцы</p></div></li>
+      <li><time>00:00</time><div><h3>Завершение вечера</h3><p>Трансфер в город</p></div></li>
     </ol>
   </div>
 </section>
 
-<section class="alt">
-  <div class="wrap">
-    <h2 class="rv">Место</h2>
-    <address class="rv">
-      <p class="place-name">Усадьба «Белая липа»</p>
-      <p class="muted">Московская область, д. Липовка, ул. Парковая, 5</p>
-      <p class="muted">Трансфер от метро — 12:30, обратно — после 23:00</p>
-    </address>
-    <a class="btn rv" href="https://yandex.ru/maps/?text=%D0%A3%D1%81%D0%B0%D0%B4%D1%8C%D0%B1%D0%B0%20%D0%91%D0%B5%D0%BB%D0%B0%D1%8F%20%D0%BB%D0%B8%D0%BF%D0%B0" target="_blank" rel="noopener">Открыть на карте</a>
-  </div>
-</section>
-
 <section>
   <div class="wrap">
-    <h2 class="rv">Дресс-код</h2>
-    <p class="lead rv">Будем рады видеть вас в мягких натуральных оттенках. Просим обойтись без чисто белого и ярких принтов.</p>
-    <div class="swatches rv" aria-label="Палитра: слоновая кость, шалфей, шампань, мокко">
-      <i class="sw" style="background:#F6F1E4"></i><i class="sw" style="background:#A9AF96"></i><i class="sw" style="background:#D8C79F"></i><i class="sw" style="background:#8E7B68"></i>
+    <h2 class="rv">Место</h2>
+    <div class="ph venue rv" id="venuePh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M3 8h4l2-3h6l2 3h4v11H3z"/><circle cx="12" cy="13" r="3.5"/></svg><small>ФОТО МЕСТА</small></div>
+    <address class="rv">
+      <p class="place-name">Шале на склоне</p>
+      <p class="muted">Ленинградская область, Токсово, ул. Офицерская, 17б/12</p>
+    </address>
+    <div class="btns rv"><a class="btn" data-q="Шале на склоне, Токсово, улица Офицерская 17б/12" target="_blank" rel="noopener">Шале на карте</a></div>
+    <div class="transfer rv">
+      <h3>Трансфер</h3>
+      <p>Отправление от ЗАГСа в <b style="font-weight:400">15:10</b></p>
+      <p class="muted">Санкт-Петербург, Суворовский проспект, 41</p>
+      <p class="muted">Обратно в город — после окончания вечера, в полночь</p>
+      <div class="btns"><a class="btn" data-q="Санкт-Петербург, Суворовский проспект, 41, ЗАГС" target="_blank" rel="noopener">ЗАГС на карте</a></div>
     </div>
   </div>
 </section>
 
 <section class="alt">
   <div class="wrap">
+    <h2 class="rv">Дресс-код</h2>
+    <p class="lead rv">Пусть наш день будет тёплым и естественным, как лес вокруг шале. Мы подобрали спокойную палитру природных оттенков.</p>
+    <div class="pal rv">
+      <figure><i class="sw" style="--c:#6B6B3A;--d:0s"></i><figcaption>оливковый</figcaption></figure>
+      <figure><i class="sw" style="--c:#4E342A;--d:.12s"></i><figcaption>шоколадный</figcaption></figure>
+      <figure><i class="sw" style="--c:#D9C7A8;--d:.24s"></i><figcaption>бежевый</figcaption></figure>
+      <figure><i class="sw" style="--c:#D2BB86;--d:.36s"></i><figcaption>песочный</figcaption></figure>
+      <figure><i class="sw" style="--c:#8A9A87;--d:.48s"></i><figcaption>серо-зелёный</figcaption></figure>
+      <figure><i class="sw" style="--c:#B5705A;--d:.6s"></i><figcaption>приглушённый терракотовый</figcaption></figure>
+    </div>
+    <p class="note rv">Просим обойтись без ярких кислотных тонов, а девушек — ещё и без белого, красного и чёрного.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
     <h2 class="rv">Ждём ваш ответ</h2>
-    <p class="muted rv" style="margin-bottom:26px">Пожалуйста, подтвердите присутствие до 1 мая</p>
+    <p class="muted rv" style="margin-bottom:26px">Пожалуйста, подтвердите присутствие заранее</p>
     <form id="rsvp" class="rv" novalidate>
       <label class="f">Имя и фамилия<input type="text" id="name" autocomplete="name" placeholder="Например, Ольга Петрова"></label>
       <div class="choices" role="radiogroup" aria-label="Вы придёте?">
@@ -223,11 +271,12 @@ footer .names{font-size:clamp(2.4rem,11vw,3.4rem);margin:0}
       </label>
       <label class="f">Пожелания к меню<input type="text" id="menu" placeholder="Аллергии, вегетарианское"></label>
       <p class="err" id="err" role="alert"></p>
-      <button class="btn" type="submit" style="margin-top:0">Отправить ответ</button>
+      <button class="btn" id="send" type="submit">Отправить ответ</button>
     </form>
     <div class="thanks" id="thanks" role="status">
       <h2 id="tt" style="margin-bottom:12px">Спасибо!</h2>
       <p class="lead" id="tm"></p>
+      <p class="muted" id="demo" style="margin-top:14px;font-size:.8rem;display:none">Тестовый режим: ответ не сохранён, форма ещё не подключена к таблице.</p>
     </div>
   </div>
 </section>
@@ -235,46 +284,87 @@ footer .names{font-size:clamp(2.4rem,11vw,3.4rem);margin:0}
 
 <footer>
   <p class="kicker rv">С любовью,</p>
-  <p class="names rv">Анна &amp; Михаил</p>
+  <p class="names rv">Олег &amp; Карина</p>
 </footer>
 
 <script>
+/* ===== НАСТРОЙКИ ===== */
+var CONFIG={
+  // Адрес веб-приложения Google Apps Script (см. инструкцию). Пока пусто — форма работает в тестовом режиме.
+  SCRIPT_URL:'',
+  // Фото места: путь к файлу, например 'photos/shale.jpg'. Пусто — показывается рамка-заглушка.
+  VENUE_PHOTO:'',
+  // 7 фото для истории по порядку, например 'photos/1.jpg'. Пусто — рамка-заглушка.
+  STORY_PHOTOS:['','','','','','','']
+};
+/* ===================== */
 (function(){
   var body=document.body, curtain=document.getElementById('curtain');
-  function open(){
-    body.classList.add('opened'); body.classList.remove('locked');
-    curtain.classList.remove('alive');
+  document.getElementById('open').addEventListener('click',function(){
+    body.classList.add('opened'); body.classList.remove('locked'); curtain.classList.remove('alive');
     setTimeout(function(){curtain.style.display='none';document.getElementById('sealbox').style.display='none'},2000);
-  }
-  document.getElementById('open').addEventListener('click',open);
+  });
+
+  var CAM='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M3 8h4l2-3h6l2 3h4v11H3z"/><circle cx="12" cy="13" r="3.5"/></svg><small>ВАШЕ ФОТО</small>';
+  function photo(el,src,alt){ if(src){el.innerHTML='<img src="'+src+'" alt="'+alt+'" loading="lazy">'} }
+
+  var STORY=[
+    {k:'Якутск',t:'Начало пути Олега',d:'Здесь Олег родился и вырос'},
+    {k:'Санкт-Петербург',t:'Олег в Питере',d:'Приехал учиться в университет'},
+    {k:'посёлок Донской',t:'Начало пути Карины',d:'Ростовская область — родные места Карины'},
+    {k:'Санкт-Петербург',t:'Карина в Питере',d:'Приехала поступать в Петербург'},
+    {k:'2023',t:'Знакомство',d:'Нас познакомили общие друзья'},
+    {k:'5 сентября',t:'Мы вместе',d:'Через пару месяцев после знакомства начали встречаться'},
+    {k:'21 июля 2027',t:'Свадьба',d:'И вот мы приглашаем вас на наш праздник'}
+  ];
+  var road=document.getElementById('road'), html='';
+  STORY.forEach(function(s,i){
+    var left=i%2===0;
+    html+='<div class="stp rv '+(left?'l':'r')+'"><div class="ph" id="sp'+i+'">'+CAM+'</div><span class="k">'+s.k+'</span><h3>'+s.t+'</h3><p>'+s.d+'</p></div>';
+    if(i<STORY.length-1){
+      var d=left?'M102 0 C102 42 198 38 198 80':'M198 0 C198 42 102 38 102 80';
+      html+='<svg class="conn" viewBox="0 0 300 80" aria-hidden="true"><mask id="mk'+i+'" maskUnits="userSpaceOnUse" x="0" y="0" width="300" height="80"><path class="mk" pathLength="1" d="'+d+'"/></mask><path class="dash" mask="url(#mk'+i+')" d="'+d+'"/></svg>';
+    }
+  });
+  road.innerHTML=html;
+  STORY.forEach(function(s,i){photo(document.getElementById('sp'+i),CONFIG.STORY_PHOTOS[i],s.t)});
+  photo(document.getElementById('venuePh'),CONFIG.VENUE_PHOTO,'Шале на склоне');
+
+  document.querySelectorAll('[data-q]').forEach(function(a){a.href='https://yandex.ru/maps/?text='+encodeURIComponent(a.getAttribute('data-q'))});
 
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.2});
-  document.querySelectorAll('.rv,.swatches').forEach(function(n){io.observe(n)});
-  document.getElementById('tl').classList.add('rv');
+  document.querySelectorAll('.rv,.conn').forEach(function(n){io.observe(n)});
 
-  var target=new Date('2027-06-19T14:00:00+03:00').getTime();
+  var target=new Date('2027-07-21T00:00:00+03:00').getTime();
   function tick(){
-    var t=Math.max(0,target-Date.now()), p=function(n){return String(n)};
-    document.getElementById('d').textContent=p(Math.floor(t/864e5));
-    document.getElementById('h').textContent=p(Math.floor(t%864e5/36e5));
-    document.getElementById('m').textContent=p(Math.floor(t%36e5/6e4));
-    document.getElementById('s').textContent=p(Math.floor(t%6e4/1e3));
+    var t=Math.max(0,target-Date.now());
+    document.getElementById('d').textContent=Math.floor(t/864e5);
+    document.getElementById('h').textContent=Math.floor(t%864e5/36e5);
+    document.getElementById('m').textContent=Math.floor(t%36e5/6e4);
+    document.getElementById('s').textContent=Math.floor(t%6e4/1e3);
   }
   tick(); setInterval(tick,1000);
 
-  var form=document.getElementById('rsvp');
-  form.addEventListener('change',function(){
-    document.getElementById('gl').style.display=form.a.value==='no'?'none':'grid';
-  });
+  var form=document.getElementById('rsvp'), btn=document.getElementById('send'), err=document.getElementById('err');
+  form.addEventListener('change',function(){document.getElementById('gl').style.display=form.a.value==='no'?'none':'grid'});
   form.addEventListener('submit',function(ev){
-    ev.preventDefault();
+    ev.preventDefault(); err.textContent='';
     var n=document.getElementById('name').value.trim();
-    if(!n){document.getElementById('err').textContent='Введите имя, чтобы мы знали, кто ответил';return}
+    if(!n){err.textContent='Введите имя, чтобы мы знали, кто ответил';return}
     var yes=form.a.value==='yes';
-    document.getElementById('tt').textContent=yes?'Спасибо, '+n.split(' ')[0]+'!':'Нам будет вас не хватать';
-    document.getElementById('tm').textContent=yes?'Мы очень рады, что вы будете с нами 19 июня.':'Спасибо, что сообщили. Мы обязательно отметим вместе в другой раз.';
-    form.style.display='none';
-    document.getElementById('thanks').classList.add('show');
+    function done(){
+      document.getElementById('tt').textContent=yes?'Спасибо, '+n.split(' ')[0]+'!':'Нам будет вас не хватать';
+      document.getElementById('tm').textContent=yes?'Мы очень рады, что вы будете с нами 21 июля.':'Спасибо, что сообщили. Мы обязательно отметим вместе в другой раз.';
+      if(!CONFIG.SCRIPT_URL)document.getElementById('demo').style.display='block';
+      form.style.display='none'; document.getElementById('thanks').classList.add('show');
+    }
+    if(!CONFIG.SCRIPT_URL){done();return}
+    var p=new URLSearchParams({name:n,attend:yes?'Придёт':'Не сможет',guests:yes?document.getElementById('g').value:'—',menu:document.getElementById('menu').value.trim()});
+    btn.disabled=true; btn.textContent='Отправляем…';
+    fetch(CONFIG.SCRIPT_URL,{method:'POST',mode:'no-cors',body:p}).then(done).catch(function(){
+      btn.disabled=false; btn.textContent='Отправить ответ';
+      err.textContent='Не получилось отправить. Проверьте интернет и попробуйте ещё раз';
+    });
   });
 })();
 </script>
