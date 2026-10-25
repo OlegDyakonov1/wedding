@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Олег и Карина — свадебное приглашение</title>
+<meta name="description" content="Приглашаем вас на нашу свадьбу 21 июля 2027 года">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Олег и Карина — свадебное приглашение">
+<meta property="og:description" content="Приглашаем вас на нашу свадьбу 21 июля 2027 года">
+<!-- Картинка для превью (по желанию). Нужна полная ссылка, например:
+<meta property="og:image" content="https://ВАШ-НИК.github.io/wedding/photos/preview.jpg"> -->
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
@@ -11,7 +19,6 @@
 :root{
   --ivory:#F6F1E4; --paper:#FBF8EF; --ink:#3B3A33; --muted:#7A766A; --gold:#A8905E; --sage:#8C9279; --line:#DDD3BD;
   --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif; --sans:"Jost","Helvetica Neue",Arial,sans-serif;
-  --noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .3 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
   color-scheme:light;
 }
@@ -115,14 +122,20 @@ address{font-style:normal}
 /* dress code */
 .pal{display:grid;grid-template-columns:repeat(3,1fr);gap:26px 10px;margin:34px auto 6px;max-width:400px}
 .pal figure{margin:0}
-.sw{width:68px;height:68px;border-radius:50%;margin:0 auto 10px;background-color:var(--c);
-  background-image:var(--noise),repeating-linear-gradient(0deg,rgba(255,255,255,.16) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgba(0,0,0,.12) 0 1px,transparent 1px 3px),radial-gradient(circle at 32% 28%,rgba(255,255,255,.28),transparent 60%);
-  box-shadow:inset 0 0 0 1px rgba(0,0,0,.06),inset -5px -7px 12px rgba(0,0,0,.18),0 8px 16px rgba(0,0,0,.14);
+.sw{display:block;width:68px;height:68px;border-radius:50%;margin:0 auto 10px;background-color:var(--c);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);
   transform:scale(.4);opacity:0;transition:transform .9s cubic-bezier(.34,1.56,.64,1) var(--d,0s),opacity .6s ease var(--d,0s)}
 .in .sw{transform:none;opacity:1}
 .pal figcaption{font-size:.8rem;color:var(--muted);line-height:1.3}
 .note{max-width:420px;margin:30px auto 0;padding-top:22px;border-top:1px solid var(--line);font-size:.92rem;color:var(--muted)}
 
+/* info */
+.info{margin-top:30px;padding-top:28px;border-top:1px solid var(--line)}
+h2+.info{margin-top:0;padding-top:0;border:0}
+.info h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.7rem;margin-bottom:8px}
+.info p+p{margin-top:4px}
+#more{display:grid;gap:18px}
+#alc-own{display:none}
 /* rsvp */
 form{display:grid;gap:18px;text-align:left;margin-top:8px}
 label.f{display:grid;gap:6px;font-size:.85rem;color:var(--muted)}
@@ -190,7 +203,7 @@ footer .names{font-size:clamp(2.4rem,11vw,3.4rem);margin:0}
 <section class="alt">
   <div class="wrap">
     <h2 class="rv">Наша история</h2>
-    <p class="muted rv" style="margin-bottom:34px">Два пути, которые привели в один город</p>
+    <p class="muted rv" style="margin-bottom:34px">Север и юг, встретившиеся в Петербурге</p>
     <div class="road" id="road"></div>
   </div>
 </section>
@@ -258,6 +271,22 @@ footer .names{font-size:clamp(2.4rem,11vw,3.4rem);margin:0}
 
 <section>
   <div class="wrap">
+    <h2 class="rv">Дополнительная информация</h2>
+    <div class="info rv">
+      <h3>Где остановиться</h3>
+      <p>Многие гости приедут из других городов. Для удобства советуем снимать квартиры в одном районе, недалеко от нашего дома: так проще добираться и проводить время вместе.</p>
+      <p class="muted">Ленинский проспект, 68</p>
+      <div class="btns"><a class="btn" data-q="Санкт-Петербург, Ленинский проспект, 68" target="_blank" rel="noopener">Район на карте</a></div>
+    </div>
+    <div class="info rv">
+      <h3>Второй день</h3>
+      <p>Мы планируем продолжить праздник 22 июля. Подробности сообщим позже.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
     <h2 class="rv">Ждём ваш ответ</h2>
     <p class="muted rv" style="margin-bottom:26px">Пожалуйста, подтвердите присутствие заранее</p>
     <form id="rsvp" class="rv" novalidate>
@@ -266,10 +295,19 @@ footer .names{font-size:clamp(2.4rem,11vw,3.4rem);margin:0}
         <label class="choice"><input type="radio" name="a" value="yes" checked><span>Приду</span></label>
         <label class="choice"><input type="radio" name="a" value="no"><span>Не смогу</span></label>
       </div>
-      <label class="f" id="gl">Сколько гостей с вами
-        <select id="g"><option>Только я</option><option>Я + 1</option><option>Я + 2</option></select>
-      </label>
-      <label class="f">Пожелания к меню<input type="text" id="menu" placeholder="Аллергии, вегетарианское"></label>
+      <div id="more">
+        <label class="f">Сколько гостей с вами
+          <select id="g"><option>Только я</option><option>Я + 1</option><option>Я + 2</option></select>
+        </label>
+        <label class="f">Предпочтения по алкоголю
+          <select id="alc">
+            <option>Не пью алкоголь</option><option>Красное вино</option><option>Белое вино</option><option>Шампанское</option>
+            <option>Крепкие напитки</option><option>Пиво</option><option value="own">Свой вариант…</option>
+          </select>
+        </label>
+        <label class="f" id="alc-own">Что бы вы хотели<input type="text" id="alcText" placeholder="Например, розовое вино или коньяк"></label>
+        <label class="f">Пожелания к меню<input type="text" id="menu" placeholder="Аллергии, вегетарианское"></label>
+      </div>
       <p class="err" id="err" role="alert"></p>
       <button class="btn" id="send" type="submit">Отправить ответ</button>
     </form>
@@ -294,8 +332,8 @@ var CONFIG={
   SCRIPT_URL:'https://script.google.com/macros/s/AKfycbwu_so_ecqtXYMOSmi9QO9QO7I-jrzjMORgLfBFZD-NCGyozOjt43M7HyzGT8VVzzK_Yg/exec',
   // Фото места: путь к файлу, например 'photos/shale.jpg'. Пусто — показывается рамка-заглушка.
   VENUE_PHOTO:'',
-  // 7 фото для истории по порядку, например 'photos/1.jpg'. Пусто — рамка-заглушка.
-  STORY_PHOTOS:['','','','','','','']
+  // 5 фото для истории по порядку, например 'photos/1.jpg'. Пусто — рамка-заглушка.
+  STORY_PHOTOS:['','','','','']
 };
 /* ===================== */
 (function(){
@@ -309,13 +347,11 @@ var CONFIG={
   function photo(el,src,alt){ if(src){el.innerHTML='<img src="'+src+'" alt="'+alt+'" loading="lazy">'} }
 
   var STORY=[
-    {k:'Якутск',t:'Начало пути Олега',d:'Здесь Олег родился и вырос'},
-    {k:'Санкт-Петербург',t:'Олег в Питере',d:'Приехал учиться в университет'},
-    {k:'посёлок Донской',t:'Начало пути Карины',d:'Ростовская область — родные места Карины'},
-    {k:'Санкт-Петербург',t:'Карина в Питере',d:'Приехала поступать в Петербург'},
-    {k:'2023',t:'Знакомство',d:'Нас познакомили общие друзья'},
-    {k:'5 сентября',t:'Мы вместе',d:'Через пару месяцев после знакомства начали встречаться'},
-    {k:'21 июля 2027',t:'Свадьба',d:'И вот мы приглашаем вас на наш праздник'}
+    {k:'Санкт-Петербург',t:'Север встретил юг',d:'Олег — с якутского севера, Карина — с донского юга, из Новочеркасска. Нас познакомили общие друзья, и Олег сразу понял: "она станет моей."'},
+    {k:'Расстояние',t:'Проверка чувств',d:'Мы разъехались в родные города и с каждым днем на расстоянии всё больше понимали: друг без друга уже не можем.'},
+    {k:'5 сентября 2023',t:'Мы стали парой',d:'По приезде Олег назначил первое свидание — и предложил начать строить отношения. 5 сентября 2023 года мы официально стали парой. С этого дня наши истории слились в одну: общие планы, общие мечты, общее будущее.'},
+    {k:'Душа в душу',t:'Наш дом',d:'Через год мы съехались. И вот уже два года живём вместе — душа в душу, деля каждый день, каждую радость и каждое утро. '},
+    {k:'22 августа 2026',t:'Предложение на скале',d:'В совместном путешествии в Дагестане, на краю скалы, где горы встречаются с небом, Олег сделал Карине предложение. Она была счастлива — и ответила «да». Теперь впереди самое главное: 21 июля 2027 года мы станем семьёй.'}
   ];
   var road=document.getElementById('road'), html='';
   STORY.forEach(function(s,i){
@@ -346,12 +382,16 @@ var CONFIG={
   tick(); setInterval(tick,1000);
 
   var form=document.getElementById('rsvp'), btn=document.getElementById('send'), err=document.getElementById('err');
-  form.addEventListener('change',function(){document.getElementById('gl').style.display=form.a.value==='no'?'none':'grid'});
+  form.addEventListener('change',function(){
+    document.getElementById('more').style.display=form.a.value==='no'?'none':'grid';
+    document.getElementById('alc-own').style.display=document.getElementById('alc').value==='own'?'grid':'none';
+  });
   form.addEventListener('submit',function(ev){
     ev.preventDefault(); err.textContent='';
     var n=document.getElementById('name').value.trim();
     if(!n){err.textContent='Введите имя, чтобы мы знали, кто ответил';return}
     var yes=form.a.value==='yes';
+    function alcVal(){var v=document.getElementById('alc').value;return v==='own'?('Свой вариант: '+(document.getElementById('alcText').value.trim()||'не указан')):v}
     function done(){
       document.getElementById('tt').textContent=yes?'Спасибо, '+n.split(' ')[0]+'!':'Нам будет вас не хватать';
       document.getElementById('tm').textContent=yes?'Мы очень рады, что вы будете с нами 21 июля.':'Спасибо, что сообщили. Мы обязательно отметим вместе в другой раз.';
@@ -359,7 +399,7 @@ var CONFIG={
       form.style.display='none'; document.getElementById('thanks').classList.add('show');
     }
     if(!CONFIG.SCRIPT_URL){done();return}
-    var p=new URLSearchParams({name:n,attend:yes?'Придёт':'Не сможет',guests:yes?document.getElementById('g').value:'—',menu:document.getElementById('menu').value.trim()});
+    var p=new URLSearchParams({name:n,attend:yes?'Придёт':'Не сможет',guests:yes?document.getElementById('g').value:'—',alcohol:yes?alcVal():'—',menu:document.getElementById('menu').value.trim()});
     btn.disabled=true; btn.textContent='Отправляем…';
     fetch(CONFIG.SCRIPT_URL,{method:'POST',mode:'no-cors',body:p}).then(done).catch(function(){
       btn.disabled=false; btn.textContent='Отправить ответ';
