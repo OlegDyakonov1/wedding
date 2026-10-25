@@ -58,6 +58,15 @@ h2{font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(2.
 .seal:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible,.choice input:focus-visible+span{outline:2px solid var(--gold);outline-offset:4px}
 .seal-box .hint{font-size:.78rem;letter-spacing:.18em;color:var(--muted)}
 
+/* music button */
+[hidden]{display:none!important}
+.snd{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));right:14px;z-index:40;width:44px;height:44px;padding:0;border-radius:50%;border:1px solid var(--gold);background:var(--paper);color:var(--ink);cursor:pointer;display:grid;place-items:center;box-shadow:0 4px 14px rgba(60,50,30,.12);animation:pop 1s ease both}
+.snd svg{width:22px;height:22px}
+.snd .x{display:none}
+.snd.off .w{display:none}.snd.off .x{display:inline}
+.snd:not(.off) .w{animation:wave 1.8s ease-in-out infinite}
+@keyframes wave{50%{opacity:.35}}
+.snd:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 /* hero */
 .hero{min-height:100svh;display:flex;align-items:center;justify-content:center;padding-top:60px}
 .hero .a{opacity:0;transform:translateY(16px);transition:opacity 1.2s ease,transform 1.2s ease}
@@ -168,6 +177,9 @@ footer .names{font-size:clamp(2.4rem,11vw,3.4rem);margin:0}
 </style>
 </head>
 <body class="locked">
+<button class="snd" id="snd" type="button" aria-label="Выключить музыку" hidden>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor" stroke="none"/><path class="w" d="M16 9c1.5 1.5 1.5 4.5 0 6M18.5 6.5c3 3 3 8 0 11"/><path class="x" d="M16 9l5 6M21 9l-5 6"/></svg>
+</button>
 
 <div class="curtain alive" id="curtain" aria-hidden="true"><div class="pan pl"></div><div class="pan pr"></div></div>
 <div class="seal-box" id="sealbox">
@@ -321,6 +333,8 @@ var CONFIG={
   // Фото места: путь к файлу, например 'photos/shale.jpg'. Пусто — показывается рамка-заглушка.
   VENUE_PHOTO:'shale.jpg',
   STORY_PHOTOS:['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg'],
+  // Фоновая музыка: файл рядом с index.html. Пусто — музыки и кнопки не будет.
+  MUSIC:'music.mp3',
   // Персональные приглашения. Ссылка для гостя: адрес-сайта/?g=КОД
   // hi — приветствие; people — кто приглашён. Лишних людей гость добавить не сможет.
   //   {n:'Имя Фамилия'}            — приглашённый человек
@@ -371,7 +385,31 @@ var CONFIG={
 /* ===================== */
 (function(){
   var body=document.body, curtain=document.getElementById('curtain');
+  var audio=CONFIG.MUSIC?new Audio(CONFIG.MUSIC):null, snd=document.getElementById('snd'), want=true;
+  if(audio){
+    audio.loop=true; audio.preload='none';
+    audio.addEventListener('error',function(){snd.hidden=true});
+  }
+  function setSnd(on){
+    want=on; snd.classList.toggle('off',!on);
+    snd.setAttribute('aria-label',on?'Выключить музыку':'Включить музыку');
+    if(!audio)return;
+    if(on){audio.play().catch(function(){})}else{audio.pause()}
+  }
+  snd.addEventListener('click',function(){setSnd(!want)});
+  document.addEventListener('visibilitychange',function(){
+    if(!audio)return;
+    if(document.hidden){audio.pause()}else if(want){audio.play().catch(function(){})}
+  });
+  function startMusic(){
+    if(!audio)return;
+    snd.hidden=false; audio.volume=0;
+    var pr=audio.play();
+    var v=0, t=setInterval(function(){v=Math.min(.55,v+.05);audio.volume=v;if(v>=.55)clearInterval(t)},150);
+    if(pr&&pr.catch)pr.catch(function(){clearInterval(t);setSnd(false)});
+  }
   document.getElementById('open').addEventListener('click',function(){
+    startMusic();
     body.classList.add('opened'); body.classList.remove('locked'); curtain.classList.remove('alive');
     setTimeout(function(){curtain.style.display='none';document.getElementById('sealbox').style.display='none'},2000);
   });
